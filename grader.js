@@ -38,11 +38,12 @@ var assertFileExists = function(infile) {
 };
 
 var cheerioURL = function(herokuurl) {
-    var url = rest.get(herokuurl).on('complete', function(data) {
-
+    var url = herokuurl + '.index.html';
+    rest.get(url).on('complete', function(data) {
+	fs.writeFile('./' + 'index.html', data, function(err, data) {});
     });
-
-    return cheerio.load(url);
+    var file = 'index.html';
+    return cheerio.load(fs.readFileSync(file));
 };
 
 var cheerioHtmlFile = function(htmlfile) {
